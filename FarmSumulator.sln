@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmSumulator.CSharp", "FarmSumulator.CSharp.csproj", "{3B753BE4-4379-4F4C-77D7-C102BF458406}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B753BE4-4379-4F4C-77D7-C102BF458406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B753BE4-4379-4F4C-77D7-C102BF458406}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B753BE4-4379-4F4C-77D7-C102BF458406}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B753BE4-4379-4F4C-77D7-C102BF458406}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
