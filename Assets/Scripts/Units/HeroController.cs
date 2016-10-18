@@ -31,7 +31,6 @@ public class HeroController : Unit {
         DropTarget();
         currentTarget = t;
         
-        scoreText.text = "" + currentScore ;
     }
     void DropTarget()
     {
@@ -43,7 +42,6 @@ public class HeroController : Unit {
                 increaseScore();
             }
             currentTarget = null;
-            scoreText.text = currentScore.ToString();
         }
 
     }
@@ -98,14 +96,6 @@ public class HeroController : Unit {
             transform.position = Vector3.Lerp(startPosition, end, DistanceDone);
         }
     }
-    void moveToPlace()
-    {
-        moveTo(endPosition);
-        if (DistanceDone >= 0.99f)
-        {
-            CurrentState = state.idle;
-        }
-    }
     void makeHeroMove(Vector3 pos )
     {
         DropTarget();
@@ -150,27 +140,33 @@ public class HeroController : Unit {
             CurrentState = state.making_Action;
         }
     }
-    void Update() {
-        if (Input.GetMouseButtonDown(1))
+    void processLeftClick()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+        foreach (RaycastHit h in hits)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] hits = Physics.RaycastAll(ray);
-            foreach (RaycastHit h in hits)
+            if (h.transform.gameObject.layer == 8)// 8 -> minion
             {
-                if (h.transform.gameObject.layer == 8)// 8 -> minion
+                lockTargetAndGo(h.transform);
+                break;
+            }
+            else
+            {
+                if (h.transform.gameObject.layer == 9)// 9 -> ground
                 {
-                    lockTargetAndGo(h.transform);
-                    break;
+                    makeHeroMove(h.point);
                 }
-                else
-                {
-                    if(h.transform.gameObject.layer == 9)// 9 -> ground
-                    {
-                        makeHeroMove(h.point);
-                    }
-                }
-                
-            }           
+            }
+        }
+    }
+    void Update() {
+        if (currentState != state.dead)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                processLeftClick();
+            }
         }
         switch (currentState)
         {
@@ -178,7 +174,11 @@ public class HeroController : Unit {
                 makeAction(); 
                 break;
             case state.moving_to_Place:
-                moveToPlace();
+                moveTo(endPosition);
+                if (DistanceDone >= 0.99f)
+                {
+                    CurrentState = state.idle;
+                }
                 break;
             case state.moving_to_Start_Action:
                 moveToAction();

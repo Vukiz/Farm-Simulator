@@ -21,29 +21,7 @@ public class Spider_Controller : Unit {
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit[] hits = Physics.RaycastAll(ray);
-                foreach (RaycastHit h in hits)
-                {
-                    if (h.transform.gameObject.layer == 9)
-                    {
-                        startTime = Time.time;
-                        endPosition = new Vector3(h.point.x, transform.position.y, h.point.z);
-                        startPosition = transform.position;
-                        CurrentState = state.moving_to_Place;
-                        Distance = Vector3.Distance(startPosition, endPosition);
-                        DistanceDone = 0;
-                        if (Distance <= 0.1f)
-                        {
-                            CurrentState = state.idle;
-                        }
-                        else
-                        {
-                            CurrentState = state.moving_to_Place;
-                        }
-                        break;
-                    }
-                }
+                ProcessLeftClick();
             }
         }
         switch (CurrentState)
@@ -55,6 +33,34 @@ public class Spider_Controller : Unit {
 
         }
         
+    }
+    void ProcessLeftClick()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+        foreach (RaycastHit h in hits)
+        {
+            if (h.transform.gameObject.layer == 9)
+            {
+                startTime = Time.time;
+                startPosition = transform.position;
+                endPosition = new Vector3(h.point.x, transform.position.y, h.point.z);
+                CurrentState = state.moving_to_Place;
+
+                Distance = Vector3.Distance(startPosition, endPosition);
+                DistanceDone = 0;
+                if (Distance <= 0.1f)
+                {
+                    CurrentState = state.idle;
+                }
+                else
+                {
+                    CurrentState = state.moving_to_Place;
+                }
+                break;
+            }
+        }
+
     }
     void moveTo(Vector3 end)
     {

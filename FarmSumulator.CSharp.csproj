@@ -73,13 +73,15 @@
     <Compile Include="Assets\Scripts\Animations\Hero_Animation_Behaviour.cs" />
     <Compile Include="Assets\Scripts\Animations\Spider_Animation_Behaviour.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\MapAwayCollider.cs" />
-    <Compile Include="Assets\Scripts\Spawn\SpawnerBehavior.cs" />
-    <Compile Include="Assets\Scripts\SpellCast.cs" />
+    <Compile Include="Assets\Scripts\Skills\FireBall.cs" />
+    <Compile Include="Assets\Scripts\Skills\SpellCast.cs" />
+    <Compile Include="Assets\Scripts\Spawn\Spawner.cs" />
+    <Compile Include="Assets\Scripts\TerrainController.cs" />
     <Compile Include="Assets\Scripts\Units\HeroController.cs" />
     <Compile Include="Assets\Scripts\Units\Spider_Controller.cs" />
     <Compile Include="Assets\Scripts\Units\Unit.cs" />
-    <Compile Include="Assets\TerrainController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
