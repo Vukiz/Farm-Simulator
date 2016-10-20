@@ -37,7 +37,7 @@ public abstract class Unit : MonoBehaviour {
             currentState = value;
         }
     }
-    public int HP
+    public virtual int HP
     {
         get
         {
@@ -46,16 +46,23 @@ public abstract class Unit : MonoBehaviour {
         set
         {
             HitPoints = value;
-
             if (HitPoints < 1)
             {
                 die();
             }
+            
         }
+    }
+    public void takeDamage(int amount)
+    {
+        HP = HitPoints - amount;//hp - amount, or hitpoints - amount?
+    
+        GetComponent<Animator>().SetInteger("HP", HitPoints);
     }
     void OnMouseDown()
     {
 
         Debug.Log("clicked>\n HP  = " + HP+"\nName = "+ gameObject.name);
     }
+
 }

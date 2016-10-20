@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\HealthController.cs" />
     <Compile Include="Assets\Scripts\Animations\AnimationNames.cs" />
     <Compile Include="Assets\Scripts\Animations\Hero_Animation_Behaviour.cs" />
     <Compile Include="Assets\Scripts\Animations\Spider_Animation_Behaviour.cs" />

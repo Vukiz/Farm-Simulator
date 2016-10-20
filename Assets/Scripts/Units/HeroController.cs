@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class HeroController : Unit {
-    public Collider groundCollider;
     
     float additionalSpace = 1;
     float startTime;
@@ -12,12 +11,28 @@ public class HeroController : Unit {
     float Distance;
     float DistanceDone;
     
-
+    public HealthController health;
     Vector3 startPosition;
     Vector3 endPosition;
     Transform currentTarget = null;
     int currentScore;
     Text scoreText; 
+    override public int HP
+    {
+        get
+        {
+            return HitPoints;
+        }
+        set
+        {
+            HitPoints = value;
+            if (HitPoints < 1)
+            {
+                die();
+            }
+            health.UpdateHearts();   
+        }
+    }
     void Start() {
         currentState = state.idle;
         animator = GetComponent<Animator>();
@@ -56,15 +71,13 @@ public class HeroController : Unit {
         {
             transform.rotation = Quaternion.LookRotation(currentTarget.position - transform.position);
         }
-        if (Vector3.Distance(transform.position, currentTarget.position) <= attackRange)
+        if (Vector3.Distance(transform.position, currentTarget.position) <= attackRange)//if we are close enough
         {
-            if ((Time.time - lastAttackTime) >= attackSpeed)
+            if ((Time.time - lastAttackTime) >= attackSpeed)// if we are not on cd
             {
-                currentTarget.GetComponent<Unit>().HP -= attackDamage;
-                int targetHP = currentTarget.GetComponent<Unit>().HP;
-                currentTarget.GetComponent<Animator>().SetInteger("HP", targetHP);
+                currentTarget.GetComponent<Unit>().takeDamage(attackDamage);
                 lastAttackTime = Time.time;
-                if(targetHP < 1)
+                if (currentTarget.GetComponent<Unit>().CurrentState == state.dead)
                 {
                     DropTarget();
                     CurrentState = state.idle;
