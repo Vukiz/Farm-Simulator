@@ -180,6 +180,9 @@ public class HeroController : Unit {
             {
                 processLeftClick();
             }
+            if (Input.GetKeyDown(KeyCode.Q)){
+                takeDamage(1);
+            }
         }
         switch (currentState)
         {
@@ -205,9 +208,6 @@ public class HeroController : Unit {
            
         }
     }
-    void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("hit with " +other.gameObject);
-    }
+    
 }
 

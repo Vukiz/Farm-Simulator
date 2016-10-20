@@ -45,19 +45,22 @@ public abstract class Unit : MonoBehaviour {
         }
         set
         {
-            HitPoints = value;
-            if (HitPoints < 1)
+            if (value <= 0)
             {
+                HitPoints = 0;
                 die();
             }
-            
+            else
+            {
+                HitPoints = value;
+            }
         }
     }
     public void takeDamage(int amount)
     {
         HP = HitPoints - amount;//hp - amount, or hitpoints - amount?
-    
         GetComponent<Animator>().SetInteger("HP", HitPoints);
+        GetComponent<Animator>().SetBool("Damaged", true);
     }
     void OnMouseDown()
     {

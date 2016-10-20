@@ -21,7 +21,7 @@ public class Spider_Controller : Unit {
         {
             if (Input.GetMouseButtonDown(0))
             {
-                ProcessLeftClick();
+                //ProcessLeftClick(); -> moves spiders with left-Click
             }
         }
         switch (CurrentState)
