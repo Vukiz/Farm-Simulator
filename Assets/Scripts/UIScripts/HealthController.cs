@@ -42,10 +42,14 @@ public class HealthController : MonoBehaviour
     {
 
         currentHealth = WhosHealth.HitPoints;
-        int heartHalvesCount = currentHealth / (healthPerHeart / 2) + 1;
+        int heartHalvesCount = (currentHealth * 2) / (healthPerHeart);
+        if((currentHealth * 2)% (healthPerHeart)!= 0)
+        {
+            heartHalvesCount += 1;
+        }
         if (heartHalvesCount == Hearts.Count)
         {
-            Debug.Log("Hearts are Fine");
+            Debug.Log("Hearts are Fine. There is "+heartHalvesCount+" halves");
             return;
         }
         if (heartHalvesCount > Hearts.Count * 2)

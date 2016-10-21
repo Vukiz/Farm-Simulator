@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FireBall : MonoBehaviour {
+public class FireBall : Spell {
 
 	// Use this for initialization
 	void Start () {

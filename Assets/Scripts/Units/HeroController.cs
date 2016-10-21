@@ -181,7 +181,7 @@ public class HeroController : Unit {
                 processLeftClick();
             }
             if (Input.GetKeyDown(KeyCode.Q)){
-                takeDamage(1);
+                takeDamage(attackDamage);
             }
         }
         switch (currentState)
