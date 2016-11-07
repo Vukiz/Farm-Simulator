@@ -76,12 +76,13 @@
     <Compile Include="Assets\Scripts\Animations\Damaged_Animation_Script.cs" />
     <Compile Include="Assets\Scripts\Animations\Hero_Animation_Behaviour.cs" />
     <Compile Include="Assets\Scripts\Animations\Spider_Animation_Behaviour.cs" />
-    <Compile Include="Assets\Scripts\Skills\FireBall.cs" />
     <Compile Include="Assets\Scripts\Skills\Spell.cs" />
     <Compile Include="Assets\Scripts\Skills\SpellCast.cs" />
-    <Compile Include="Assets\Scripts\Spawn\Spawner.cs" />
+    <Compile Include="Assets\Scripts\Skills\Teleport.cs" />
+    <Compile Include="Assets\Spawn\Spawner.cs" />
     <Compile Include="Assets\Scripts\UIScripts\HealthController.cs" />
     <Compile Include="Assets\Scripts\Units\HeroController.cs" />
+    <Compile Include="Assets\Scripts\Units\Potion_Controller.cs" />
     <Compile Include="Assets\Scripts\Units\Spider_Controller.cs" />
     <Compile Include="Assets\Scripts\Units\Unit.cs" />
     <Compile Include="Assets\Scripts\World\CameraController.cs" />

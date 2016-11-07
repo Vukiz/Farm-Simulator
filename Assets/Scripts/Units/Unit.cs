@@ -4,10 +4,12 @@ using System.Collections;
 public abstract class Unit : MonoBehaviour {
     protected Animator animator;
     public int HitPoints;
+    public int maxHP = 50;
     public float UnitSpeed;
     public float attackSpeed;
     public int attackDamage;
     public int attackRange;
+
     protected float attackAnimationtime;
     protected state currentState;
     public enum state
@@ -61,6 +63,12 @@ public abstract class Unit : MonoBehaviour {
         HP = HitPoints - amount;//hp - amount, or hitpoints - amount?
         GetComponent<Animator>().SetInteger("HP", HitPoints);
         GetComponent<Animator>().SetBool("Damaged", true);
+    }
+    public void Heal(int amount)
+    {
+        HP = HitPoints + amount;
+        if (HP > maxHP) HP = maxHP;
+        GetComponent<Animator>().SetInteger("HP", HitPoints);
     }
     void OnMouseDown()
     {

@@ -11,5 +11,8 @@ public class GameController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)){
             GetComponent<Spawner>().Spawn_Spider();
         }
+        if (Input.GetKeyDown(KeyCode.P)){
+            GetComponent<Spawner>().Spawn_Potion(0,100);
+        }
 	}
 }

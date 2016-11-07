@@ -10,93 +10,91 @@ public class HealthController : MonoBehaviour
     public HeroController WhosHealth;
     public Sprite[] heartsImages;
     int currentHealth;
-
+    int currentHeartPosition;
+    int lastUpdateHealth;
     LinkedList<Image> Hearts;
-
     void Start()
     {
+        fillHealth();
+    }
+    public void fillHealth()
+    {
         Hearts = new LinkedList<Image>();
-        fillHearts();
-    }
-    void fillHearts()
-    {
-        currentHealth = WhosHealth.HitPoints;
-
-        int heartHalvesCount = currentHealth / (healthPerHeart / 2);// how much heart halves we have?
-        Debug.Log("Updating Hearts");
-        addHeartsUntill(heartHalvesCount);
-
-    }
-    void addHeartsUntill(int halvesCount)
-    {
-        for (int i = 0; i < halvesCount / 2; i++)
-        {
-            addFullHeart(i);
-        }
-        if (halvesCount % 2 != 0)
-        {
-            addHalfHeart();
-        }
+        lastUpdateHealth = 0;
+        currentHeartPosition = 0;
+        UpdateHearts();
     }
     public void UpdateHearts()
     {
-
-        currentHealth = WhosHealth.HitPoints;
-        int heartHalvesCount = (currentHealth * 2) / (healthPerHeart);
-        if((currentHealth * 2)% (healthPerHeart)!= 0)
+        currentHealth = WhosHealth.HitPoints;      
+       // Debug.Log(currentHealth + " " + lastUpdateHealth); 
+        if (currentHealth > lastUpdateHealth)
         {
-            heartHalvesCount += 1;
-        }
-        if (heartHalvesCount == Hearts.Count)
-        {
-            Debug.Log("Hearts are Fine. There is "+heartHalvesCount+" halves");
-            return;
-        }
-        if (heartHalvesCount > Hearts.Count * 2)
-        {
-            Debug.Log("Hearts needs to be added");
-            addHeartsUntill(heartHalvesCount);
+            removeHeartsLack();
         }
         else
         {
-            Debug.Log("Hearts needs to be deleted");
-            removeHeartsUntill(heartHalvesCount);
+            removeHeartsExcess();
         }
-
+        lastUpdateHealth = currentHealth;
 
     }
-    void addHalfHeart()
+    ///<summary>
+    /// 1 : half heart ||
+    /// 0 : full heart
+    ///</summary>
+    void addHeart(int position, int type)
     {
-        Debug.Log("Adding half");
+       // Debug.Log("adding heart to " + position +" with type : "+ type);
         Image newHeart = Instantiate(Heart);
         newHeart.transform.SetParent(transform);
         newHeart.transform.position = transform.position;
-        newHeart.sprite = heartsImages[1];
-        newHeart.transform.position += new Vector3(55 * Hearts.Count, 0, 0);
+        newHeart.transform.position += new Vector3(55 * position, 0, 0);
+        newHeart.sprite = heartsImages[type];
         Hearts.AddLast(newHeart);
+
+        currentHeartPosition++;
     }
-    void addFullHeart(int at)// at -> this HEART position in healthbar
+
+    ///<summary>
+    /// Adding hearts to screen until the leak is fixed
+    ///</summary>
+    void removeHeartsLack()
     {
-        Image newHeart = Instantiate(Heart);
-        newHeart.transform.SetParent(transform);
-        newHeart.transform.position = transform.position;
-        newHeart.transform.position += new Vector3(55 * at, 0, 0);
-        Hearts.AddLast(newHeart);
+        Debug.Log("where`s heart lack");
+
+        if (Hearts.Count > 0 && Hearts.Last.Value.sprite == heartsImages[1])
+        {
+            if ((currentHeartPosition + 1) * healthPerHeart - healthPerHeart / 2 <= currentHealth)
+            {
+                Hearts.Last.Value.sprite = heartsImages[0];
+            }
+        }
+        while ((currentHeartPosition + 1) * healthPerHeart <= currentHealth)
+        {
+            addHeart(currentHeartPosition, 0);
+        }
+        if (currentHealth % 10 >= healthPerHeart / 2)
+        {
+            addHeart(currentHeartPosition, 1);
+        }
     }
-    void removeHeartsUntill(int halvesCount)
+    ///<summary>
+    ///Removing hearts from screen until the excess is fixed
+    ///</summary>
+    void removeHeartsExcess()
     {
-        int heartHalvesDifference = (Hearts.Count * 2 - halvesCount);
-        Debug.Log("Removing " + heartHalvesDifference + " Heart half");
-        for (int i = 0; i < heartHalvesDifference / 2; i++)
+
+        //Debug.Log("where`s heart excess");
+        while ((currentHeartPosition) * healthPerHeart > currentHealth)
         {
             Destroy(Hearts.Last.Value.gameObject);
             Hearts.RemoveLast();
+            currentHeartPosition--;
         }
-        if (heartHalvesDifference % 2 != 0)
-        { 
-            Destroy(Hearts.Last.Value.gameObject);
-            Hearts.RemoveLast();
-            addHalfHeart();
+        if (currentHealth % 10 >= healthPerHeart / 2)
+        {
+            addHeart(currentHeartPosition, 1);
         }
     }
 

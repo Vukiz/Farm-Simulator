@@ -1,27 +1,57 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-public class Spell : MonoBehaviour
+
+public abstract class  Spell: MonoBehaviour
 {
-    int castRange;
-    Vector3 targetPosition;
-    public Vector3 targetPos
+    public bool available
+    {
+        get
+        {
+            return isAvailable;
+        }
+        set
+        {
+            isAvailable = value;
+            CD = 0;
+
+        }
+    }
+    public bool isAvailable;
+    float CD;
+    public float CDduration;
+    public float cooldownTime;
+    public KeyCode skillKey;
+    public float cooldown
     {
         set
         {
-            targetPosition = value;
+            if (value <= 0)
+            {
+                CD = 0;
+            }
+            else CD = value;
         }
-
+        get
+        {
+            return CD;
+        }
     }
-    // Use this for initialization
-    void Start()
+    public int range;
+    public abstract void cast();
+    public void Update()
     {
-
+        if (Input.GetKeyDown(skillKey))
+        {
+            cast();
+        }
     }
-
-    // Update is called once per frame
-    void Update()
+    public void OnMouseDown()
     {
-
+        cast();
     }
+    
 }

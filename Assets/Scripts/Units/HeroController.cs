@@ -180,7 +180,7 @@ public class HeroController : Unit {
             {
                 processLeftClick();
             }
-            if (Input.GetKeyDown(KeyCode.Q)){
+            if (Input.GetKeyDown(KeyCode.Q)){ 
                 takeDamage(attackDamage);
             }
         }
